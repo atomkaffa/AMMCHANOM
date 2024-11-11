@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+  
+  body {
+    display: flex; /* This enables flexbox */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensures full height for centering */
+    background-color: #f3f4f6;
+    padding: 20px; /* Adds padding in case the modal is large on smaller screens */
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+    
+  }
+  
+  #loginModal {
+    background-color: #fff;
+    width: 100%;
+    max-width: 300px;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  #loginModal label {
+    font-size: 0.9rem;
+    color: #888;
+    margin-bottom: 8px;
+    display: block;
+    text-align: left;
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  .input-container .icon {
+    font-size: 1.2rem;
+    color: #aaa;
+    margin-right: 8px;
+  }
+  
+  .input-container input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(to right, #6a5acd, #d87093);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  button:hover {
+    opacity: 0.9;
+  }
+  
+  .forgot-password {
+    font-size: 0.8rem;
+    color: #888;
+    text-decoration: none;
+    display: block;
+    margin-top: 10px;
+  }
+  
+  .forgot-password:hover {
+    color: #555;
+  }
+  

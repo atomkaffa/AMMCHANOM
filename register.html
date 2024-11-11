@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Bubble Tea Shop</title>
+  <link rel="stylesheet" href="style/styleregister.css">
+</head>
+<body>
+  <header>
+
+  </header>
+
+  <div id="registerModal">
+    <h1>Register</h1>
+    <div class="input-container">
+      <span class="icon">👤</span>
+      <input type="text" id="register-username" placeholder="Type your username" required>
+    </div>
+    <div class="input-container">
+      <span class="icon">🔒</span>
+      <input type="password" id="register-password" placeholder="Type your password" required>
+    </div>
+    <button onclick="register()">Register</button>
+    <button onclick="goBack()">Back</button>
+  </div>
+
+  <script>
+    async function register() {
+      const username = document.getElementById('register-username').value;
+      const password = document.getElementById('register-password').value;
+
+      const response = await fetch('http://localhost:3000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+      });
+      const result = await response.json();
+      if (result.success) {
+        alert('Register successful!');
+        window.location.href = "login.html"; // Redirect to login page after successful registration
+      } else {
+        alert('Register failed. Please try again.');
+      }
+    }
+
+    function goBack() {
+      window.location.href = "index.html"; // Back to main page
+    }
+  </script>
+</body>
+</html>

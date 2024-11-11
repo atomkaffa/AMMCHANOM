@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/styleadmin.css">
+    <script src="admin.js" defer></script>
+    <title>Admin Panel</title>
+</head>
+<body>
+    <header>
+        <h1>Admin Panel</h1>
+    </header>
+
+    <section id="admin-order">
+        <h2>คำสั่งซื้อ</h2>
+        <p>ชื่อผู้ใช้: <span id="admin-username"></span></p>
+        <p>เมนู: <span id="admin-items"></span></p>
+        <p>ราคา: ฿<span id="admin-total-price">0.00</span></p>
+        
+        <label for="status">เลือกสถานะคำสั่งซื้อ:</label>
+        <select id="status">
+            <option value="รอดำเนินการ">รอดำเนินการ</option>
+            <option value="กำลังทำอาหาร">กำลังทำอาหาร</option>
+            <option value="เสร็จสิ้น">เสร็จสิ้น</option>
+            <option value="ยกเลิก">ยกเลิก</option>
+        </select>
+
+        <button onclick="updateOrderStatus()">อัปเดตสถานะ</button>
+    </section>
+
+    <script>
+        window.onload = function() {
+            // แสดงข้อมูลคำสั่งซื้อจาก localStorage
+            displayOrderDetails();
+        };
+
+        // ฟังก์ชันแสดงข้อมูลคำสั่งซื้อในหน้า Admin
+        function displayOrderDetails() {
+            const order = JSON.parse(localStorage.getItem('order')) || {};
+            
+            // แสดงชื่อผู้ใช้
+            document.getElementById('admin-username').innerText = order.username || 'ไม่ระบุ';
+            
+            // แสดงชื่อเมนู
+            if (order.items && order.items.length > 0) {
+                const itemsList = order.items.map(item => item.name).join(', ');  // เรียงชื่อเมนูจาก order.items
+                document.getElementById('admin-items').innerText = itemsList;
+            } else {
+                document.getElementById('admin-items').innerText = 'ช็อคโกแลตปั่น';
+            }
+            
+            // แสดงราคาทั้งหมด
+            document.getElementById('admin-total-price').innerText = (order.totalPrice || 0).toFixed(2);
+
+            // กำหนดสถานะให้ตรงกับสถานะใน localStorage
+            document.getElementById('status').value = order.status || 'รอดำเนินการ';
+        }
+
+        // ฟังก์ชันอัปเดตสถานะคำสั่งซื้อ
+        function updateOrderStatus() {
+            const order = JSON.parse(localStorage.getItem('order')) || {};
+            order.status = document.getElementById('status').value;
+
+            // เก็บข้อมูลสถานะใหม่ใน localStorage
+            localStorage.setItem('order', JSON.stringify(order));
+
+            // แจ้งเตือนสถานะที่อัปเดต
+            alert('สถานะคำสั่งซื้อได้อัปเดตเรียบร้อยแล้ว');
+        }
+    </script>
+</body>
+</html>

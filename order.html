@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="stylesheet" href="style/styleorder.css">
+
+  <script src="summary.js" defer></script>
+</head>
+<body>
+
+  <!-- Header สำหรับ Order Summary -->
+  <header>
+    <h1>Order Summary</h1>
+  </header>
+
+ 
+  <section id="order-details">
+    <h2 id="order-status">สถานะคำสั่งซื้อ: <span id="status">รอดำเนินการ</span></h2>
+    <h3>ชื่อผู้ใช้: <span id="username"></span></h3>
+    <h3>ราคา: ฿<span id="total-price">0.00</span></h3>
+    <button onclick="goBack()">กลับไปที่หน้าเมนู</button>
+  </section>
+
+<script>
+    window.onload = function() {
+      // แสดงข้อมูลคำสั่งซื้อเมื่อโหลดหน้า
+      displayOrderDetails();
+
+      // ตรวจสอบการเปลี่ยนแปลงของสถานะใน localStorage แบบ real-time
+      window.addEventListener('storage', function(event) {
+        if (event.key === 'order') {
+          displayOrderDetails(); // อัปเดตสถานะคำสั่งซื้อ
+        }
+      });
+    };
+
+    // ฟังก์ชันแสดงข้อมูลคำสั่งซื้อ
+    function displayOrderDetails() {
+      const order = JSON.parse(localStorage.getItem('order')) || {};
+
+      if (order) {
+        document.getElementById('username').innerText = order.username || 'ไม่ระบุ';
+        document.getElementById('status').innerText = order.status || 'Pending';
+        document.getElementById('total-price').innerText = (order.totalPrice || 0).toFixed(2);
+
+        const orderItemsList = document.getElementById('cart-items');
+        if (order.items) {
+          orderItemsList.innerHTML = ''; // ล้างรายการเก่า
+          order.items.forEach(item => {
+            const li = document.createElement('li');
+            li.innerText = `${item.name} - ฿${item.price} (Sweetness: ${item.sweetness}%)`;
+            orderItemsList.appendChild(li);
+          });
+        }
+      }
+    }
+
+    // ฟังก์ชันกลับไปที่หน้าเมนู
+    function goBack() {
+      window.location.href = 'user.html';
+    }
+  </script>
+
+
+  <div class="review-header">
+    <h1>Review</h1>
+  </div>
+
+  <div class="review-container">
+
+    <div class="review-card">
+      <div class="profile-pic">
+        <img src="images/money.jpg">
+      </div>
+      <div class="review-content">
+        <h3>money</h3>
+        <div class="stars">★★★★★</div>
+        <p>พนักงานน่ารัก บริการดี ใส่ใจลูกค้าค่ะ</p>
+        <p style="font-size:25px">
+          &#128151;&#128151;
+        </p>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="profile-pic">
+        <img src="images/sand.jpg">
+      </div>
+      <div class="review-content">
+          <h3>sand</h3>
+          <div class="stars">★★★★★</div>
+          <p>แอดมินตอบเเชทไวมากครับ</p>
+          <p style="font-size:25px">
+            &#128513; 
+          </p>
+      </div>
+  </div>
+
+  <div class="review-card">
+    <div class="profile-pic">
+      <img src="images/atom.jpg">
+    </div>
+    <div class="review-content">
+        <h3>atom</h3>
+        <div class="stars">★★★★★</div>
+        <p>รสชาติหอมหวาน ลงตัวมากครับ</p>
+    </div>
+</div>
+
+    <div class="review-card">
+      <div class="profile-pic">
+        <img src="images/aom.jpg">
+      </div>
+      <div class="review-content">
+        <h3>aom</h3>
+        <div class="stars">★★★★★</div>
+        <p>รสชาติอร่อยค่ะ ไว้จะไปอุดหนุนอีกนะคะ </p>
+      </div>
+    </div>
+
+    <div class="review-card">
+      <div class="profile-pic">
+        <img src="images/mint.jpg">
+      </div>
+      <div class="review-content">
+        <h3>mint</h3>
+        <div class="stars">★★★★★</div>
+        <p>บรรยากาศร้านน่านั่งมากเลยค่ะ</p>
+        <p style="font-size:25px">
+          &#128525; &#128525; 
+        </p>
+      </div>
+    </div>
+
+ <!-- Form สำหรับเขียนรีวิว -->
+  <h2> Comment</h2>
+ <div class="review-form">
+  <input type="text" id="name" placeholder="Your Name">
+  <input type="file" id="profile-pic" accept="image/*">
+  <select id="rating">
+    <option value="★★★★★">★★★★★</option>
+    <option value="★★★★">★★★★</option>
+    <option value="★★★">★★★</option>
+    <option value="★★">★★</option>
+    <option value="★">★</option>
+  </select>
+  <textarea id="comment" placeholder="Write your review..."></textarea>
+  <button onclick="addReview()">Submit Review</button>
+</div>
+
+<div class="review-container" id="review-container">
+  <!-- Existing reviews go here -->
+</div>
+  </div>
+
+  <!-- ลิงก์ไปยังไฟล์ JavaScript -->
+  <script src="summary.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #F6F5F2;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* Header Styles */
+header {
+    background-color: #34577f;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 15px solid #9ca3af;
+    width: 100%;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #ffffff;
+}
+
+/* Admin Order Section Styles */
+#admin-order {
+    background-color: #fff;
+    color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 20px 0;
+}
+
+#admin-order h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #34577f; /* สีของหัวข้อ */
+}
+
+#admin-order p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+#admin-order label {
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+#admin-order select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#admin-order button {
+    background-color: #34577f;
+    color: white;
+    padding: 10px 15px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#admin-order button:hover {
+    background-color: #2c4f67; /* สีเมื่อ hover */
+}

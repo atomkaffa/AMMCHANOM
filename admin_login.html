@@ -1,0 +1,53 @@
+<!-- admin_login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+  <link rel="stylesheet" href="style/styleadminlogin.css">
+</head>
+
+<body>
+  <form id="admin-login-form">
+    <h1>Admin Login</h1>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <button type="submit">Login</button>
+  </form>
+  <p id="login-message"></p>
+
+  <script>
+    document.getElementById('admin-login-form').addEventListener('submit', function (event) {
+      event.preventDefault(); // ป้องกันการส่งฟอร์มแบบปกติ
+
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      fetch('http://localhost:3000/admin-login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // หากเข้าสู่ระบบสำเร็จ นำไปยังหน้า admin.html
+          localStorage.setItem('isAdminLoggedIn', true);
+          localStorage.setItem('username', username);
+          window.location.href = 'admin.html';
+        } else {
+          // แสดงข้อความผิดพลาดหากเข้าสู่ระบบไม่สำเร็จ
+          document.getElementById('login-message').textContent = data.message;
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('login-message').textContent = 'Login failed. Please try again.';
+      });
+    });
+  </script>
+</body>
+</html>

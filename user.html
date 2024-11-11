@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แดชบอร์ดผู้ใช้</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1> Menu </h1>
+    </header>
+    <main>
+        <h2 id="welcome-message"></h2>
+        <a href="index.html"><button class="logout-btn">Logout</button></a>
+    </main>
+    <input type="text" id="search-input" placeholder="ค้นหาเมนู...">
+    <button class="search-btn" onclick="searchMenu()">ค้นหาเมนู</button>
+    
+    <section id="menu">
+        <div id="products-list"> 
+            <!-- รายการเมนูที่มีอยู่ -->
+        </div>
+    </section>
+
+    <section id="cart">
+        <h2>รายการสินค้า</h2>
+        <ul id="cart-items">
+            <!-- รายการเมนูจะแสดงที่นี่ -->
+        </ul>
+        <p>Total: ฿<span id="total-price">0.00</span></p>
+    
+        <!-- ตัวเลือกวิธีการชำระเงิน -->
+        <h3>เลือกวิธีการชำระเงิน</h3>
+        <select id="payment-method">
+            <option value="credit-card">บัตรเครดิต/เดบิต</option>
+            <option value="e-wallet">พร้อมเพย์</option>
+            <option value="cash-on-delivery">เงินสด</option>
+        </select>
+    
+        <button class="checkout-btn" onclick="checkout()">ชำระเงิน</button>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Display username in the welcome message
+        const params = new URLSearchParams(window.location.search);
+        const username = params.get('username');
+        if (username) {
+            document.getElementById('welcome-message').innerText = `เลือกเมนูที่ต้องการสั่ง, ${username}!`;
+            localStorage.setItem('username', username); // บันทึก username ลงใน localStorage
+        } else {
+            document.getElementById('welcome-message').innerText = 'เลือกเมนูที่ต้องการสั่ง';
+        }
+
+        // ฟังก์ชันค้นหาเมนู
+        function searchMenu() {
+            const input = document.getElementById('search-input').value.toLowerCase();
+            const items = document.querySelectorAll('#products-list div');
+
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(input)) {
+                    item.style.display = 'block'; // แสดงรายการที่ตรงกับการค้นหา
+                } else {
+                    item.style.display = 'none'; // ซ่อนรายการที่ไม่ตรงกับการค้นหา
+                }
+            });
+        }
+     
+        // ฟังก์ชันชำระเงินและบันทึกคำสั่งซื้อ
+        function checkout() {
+            // ดึงรายการสินค้าและราคาจาก `cart-items` และ `total-price`
+            const cartItems = JSON.parse(localStorage.getItem('orderItems')) || [];
+            const totalPrice = parseFloat(document.getElementById('total-price').innerText.replace('฿', '')) || 0;
+
+            // สร้างออบเจ็กต์คำสั่งซื้อ
+            const order = {
+                username: username || 'ไม่ระบุ',
+                items: cartItems,
+                totalPrice: totalPrice,
+                status: "รอการดำเนินการ"
+            };
+
+            // ตรวจสอบข้อมูลก่อนบันทึก
+            console.log("Order data being saved:", order); 
+
+            // บันทึกคำสั่งซื้อใน localStorage
+            localStorage.setItem('order', JSON.stringify(order));
+
+            // ไปยังหน้า order.html เพื่อแสดงผลข้อมูล
+            window.location.href = 'order.html';
+        }
+    </script>
+</body>
+</html>
